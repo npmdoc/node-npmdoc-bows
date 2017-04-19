@@ -1,0 +1,176 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/latentflip/bows#readme">bows (v1.6.0)</a>
+</h1>
+<h4>Rainbowed console logs for chrome, opera and firefox in development.</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.bows">module bows</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.bows.bows">
+            function <span class="apidocSignatureSpan"></span>bows
+            <span class="apidocSignatureSpan">(str)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.bows.config">
+            function <span class="apidocSignatureSpan">bows.</span>config
+            <span class="apidocSignatureSpan">(config)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.bows" id="apidoc.module.bows">module bows</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.bows.bows" id="apidoc.element.bows.bows">
+        function <span class="apidocSignatureSpan"></span>bows
+        <span class="apidocSignatureSpan">(str)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">bows = function (str) {
+  var msg, colorString, logfn;
+  msg = (str.slice(0, padLength));
+  msg += Array(padLength + 3 - msg.length).join(' ') + '|';
+
+  if (debugRegex) {
+      var matches = str.match(debugRegex);
+      if (
+          (!invertRegex &amp;&amp; !matches) ||
+          (invertRegex &amp;&amp; matches)
+      ) return noop;
+  }
+
+  if (!bind) return noop;
+
+  var logArgs = [logger];
+  if (colorsSupported) {
+    if(!moduleColorsMap[str]){
+      moduleColorsMap[str]= yieldColor();
+    }
+    var color = moduleColorsMap[str];
+    msg = "%c" + msg;
+    colorString = "color: hsl(" + (color) + ",99%,40%); font-weight: bold";
+
+    logArgs.push(msg, colorString);
+  }else{
+    logArgs.push(msg);
+  }
+
+  if(arguments.length&gt;1){
+      var args = Array.prototype.slice.call(arguments, 1);
+      logArgs = logArgs.concat(args);
+  }
+
+  logfn = bind.apply(logger.log, logArgs);
+
+  logLevels.forEach(function (f) {
+    logfn[f] = bind.apply(logger[f] || logfn, logArgs);
+  });
+  return logfn;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.bows.config" id="apidoc.element.bows.config">
+        function <span class="apidocSignatureSpan">bows.</span>config
+        <span class="apidocSignatureSpan">(config)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">config = function (config) {
+  if (config.padLength) {
+    padLength = config.padLength;
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+## Example
+
+```javascript
+//Should be set in your console to see messages
+localStorage.debug = true
+//Configure the max length of module names (optional)
+bows.<span class="apidocCodeKeywordSpan">config</span>({ padLength: 10 })
+
+var logger1 = bows('Module 1')
+var logger2 = bows('Module 2')
+var logger3 = bows('Module 3')
+
+logger1("We started up")
+logger2("We did something too")
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
